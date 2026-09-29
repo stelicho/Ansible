@@ -1,0 +1,15 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  tasks:
+    - name: Check nginx service is active
+      ansible.builtin.systemd:
+        name: nginx
+      register: nginx_status
+      failed_when: nginx_status.status.ActiveState != "active"
+
+    - name: Check health endpoint responds through nginx
+      ansible.builtin.uri:
+        url: "http://localhost{{ nginx_health_check_path }}"
+        status_code: 200

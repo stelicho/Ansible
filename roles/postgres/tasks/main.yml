@@ -1,0 +1,40 @@
+---
+- name: Install PostgreSQL
+  ansible.builtin.apt:
+    name:
+      - "postgresql-{{ postgres_version }}"
+      - python3-psycopg2
+    state: present
+    update_cache: true
+  become: true
+
+- name: Ensure PostgreSQL is enabled and running
+  ansible.builtin.systemd:
+    name: postgresql
+    state: started
+    enabled: true
+  become: true
+
+- name: Set listen_addresses
+  ansible.builtin.lineinfile:
+    path: "/etc/postgresql/{{ postgres_version }}/main/postgresql.conf"
+    regexp: "^#?listen_addresses ="
+    line: "listen_addresses = '{{ postgres_listen_addresses }}'"
+  become: true
+  notify: Restart postgresql
+
+- name: Create application database
+  community.postgresql.postgresql_db:
+    name: "{{ postgres_db_name }}"
+  become: true
+  become_user: postgres
+
+- name: Create application database user
+  community.postgresql.postgresql_user:
+    db: "{{ postgres_db_name }}"
+    name: "{{ postgres_db_user }}"
+    password: "{{ postgres_db_password }}"
+    priv: ALL
+  become: true
+  become_user: postgres
+  no_log: true

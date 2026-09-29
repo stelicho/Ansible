@@ -1,0 +1,12 @@
+---
+# Installs Docker Engine + Compose plugin, then deploys a small
+# multi-container stack (web + cache) with a rolling restart handler.
+#
+#   ansible-playbook containers.yml
+
+- name: Provision Docker hosts and deploy container stack
+  hosts: dockerhosts
+  become: true
+  roles:
+    - docker
+    - containers_app

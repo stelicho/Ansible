@@ -1,0 +1,20 @@
+---
+# node_exporter on every monitored tier, then Prometheus + Grafana on
+# the monitoring host. Prometheus's scrape config is templated
+# directly from the live inventory groups (see
+# roles/prometheus/templates/prometheus.yml.j2) rather than hardcoded.
+#
+#   ansible-playbook monitoring.yml --ask-vault-pass
+
+- name: Deploy node_exporter to every monitored host
+  hosts: webservers:appservers:dbservers:dockerhosts:monitoring
+  become: true
+  roles:
+    - node_exporter
+
+- name: Configure Prometheus and Grafana
+  hosts: monitoring
+  become: true
+  roles:
+    - prometheus
+    - grafana

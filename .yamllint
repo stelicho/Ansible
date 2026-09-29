@@ -1,0 +1,24 @@
+---
+# This mirrors the yamllint config ansible-lint recommends: rules that
+# overlap with (or conflict with) ansible-lint's own YAML checks are
+# turned off here so the same issue isn't reported twice, and rules
+# that don't make sense for ansible-vault-encrypted *.yml files
+# (document-start) are relaxed.
+extends: default
+
+rules:
+  braces:
+    max-spaces-inside: 1
+  brackets:
+    max-spaces-inside: 1
+  comments:
+    min-spaces-from-content: 1
+  comments-indentation: disable
+  document-start: disable
+  line-length:
+    max: 160
+  octal-values:
+    forbid-implicit-octal: true
+    forbid-explicit-octal: true
+  truthy:
+    allowed-values: ["true", "false", "yes", "no"]

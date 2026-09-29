@@ -1,0 +1,9 @@
+---
+profile: production
+
+exclude_paths:
+  - .github/
+  - "**/molecule/"
+
+skip_list:
+  - yaml[line-length]

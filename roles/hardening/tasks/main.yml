@@ -1,0 +1,16 @@
+---
+- name: SSH hardening
+  ansible.builtin.include_tasks: ssh.yml
+  tags: [hardening, ssh]
+
+- name: Firewall (UFW) configuration
+  ansible.builtin.include_tasks: firewall.yml
+  tags: [hardening, firewall]
+
+- name: Fail2ban configuration
+  ansible.builtin.include_tasks: fail2ban.yml
+  tags: [hardening, fail2ban]
+
+- name: Automatic security updates
+  ansible.builtin.include_tasks: updates.yml
+  tags: [hardening, updates]

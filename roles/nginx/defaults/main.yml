@@ -1,0 +1,4 @@
+---
+nginx_upstream_port: 8080
+nginx_server_name: "_"
+nginx_health_check_path: "/healthz"

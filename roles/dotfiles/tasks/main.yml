@@ -3,6 +3,7 @@
   ansible.builtin.git:
     repo: "{{ dotfiles_repo }}"
     dest: "{{ dotfiles_dest }}"
+    version: "{{ dotfiles_version | default('main') }}"
     update: true
 
 - name: Symlink dotfiles into home directory

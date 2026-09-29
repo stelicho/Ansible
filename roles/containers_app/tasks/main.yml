@@ -1,0 +1,27 @@
+---
+- name: Create compose project directory
+  ansible.builtin.file:
+    path: "{{ containers_app_dest }}"
+    state: directory
+    mode: "0755"
+  become: true
+
+- name: Template docker-compose stack definition
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: "{{ containers_app_dest }}/docker-compose.yml"
+    mode: "0644"
+  become: true
+  notify: Restart stack
+
+- name: Deploy stack with Docker Compose
+  community.docker.docker_compose_v2:
+    project_src: "{{ containers_app_dest }}"
+    state: present
+  become: true
+  register: containers_app_compose_result
+
+- name: Report container status
+  ansible.builtin.debug:
+    msg: "{{ containers_app_compose_result.containers | map(attribute='Service') | list }}"
+  when: containers_app_compose_result.containers is defined

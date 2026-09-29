@@ -1,0 +1,12 @@
+---
+app_repo: "https://github.com/youruser/demo-app.git"
+app_version: main
+app_dest: /opt/demo-app
+app_port: 8080
+app_user: appsvc
+
+# Resolved lazily from the dbservers group so this file doesn't need to
+# duplicate the database tier's connection details.
+db_host: "{{ hostvars[groups['dbservers'][0]].ansible_host | default(groups['dbservers'][0]) }}"
+db_name: demo_app
+db_user: demo_app

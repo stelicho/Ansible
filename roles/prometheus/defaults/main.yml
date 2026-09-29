@@ -1,0 +1,4 @@
+---
+prometheus_version: "2.54.1"
+prometheus_user: prometheus
+prometheus_scrape_interval: 15s

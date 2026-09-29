@@ -1,9 +1,11 @@
 *.retry
 *.log
 
-# Vault / secrets
-vault.yml
-*.vault.yml
+# Vault password files - never commit these. The group_vars/*/vault.yml
+# files themselves ARE committed on purpose: they're ansible-vault
+# encrypted at rest, which is the whole point of using vault.
+.vault_pass*
+*.vault_pass
 secrets.yml
 *.pem
 *.key
@@ -16,6 +18,10 @@ inventory/group_vars/*.local.yml
 .ansible/
 ansible.log
 *.retry
+
+# Molecule
+.cache/
+molecule/*/molecule.log
 
 # Python
 __pycache__/

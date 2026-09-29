@@ -1,0 +1,22 @@
+---
+driver:
+  name: docker
+
+platforms:
+  - name: nginx-instance
+    image: "geerlingguy/docker-ubuntu2204-ansible:latest"
+    pre_build_image: true
+    privileged: true
+    cgroupns_mode: host
+    command: ""
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      nginx-instance:
+        nginx_upstream_port: 8080
+        nginx_server_name: "molecule.test"
+
+verifier:
+  name: ansible

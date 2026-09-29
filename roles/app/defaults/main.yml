@@ -1,0 +1,6 @@
+---
+app_repo: "https://github.com/youruser/demo-app.git"
+app_version: main
+app_dest: /opt/demo-app
+app_port: 8080
+app_user: appsvc

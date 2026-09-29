@@ -1,0 +1,23 @@
+services:
+  web:
+    image: "{{ containers_app_web_image }}"
+    restart: unless-stopped
+    ports:
+      - "{{ containers_app_web_port }}:80"
+    networks:
+      - demo_net
+
+  cache:
+    image: "{{ containers_app_redis_image }}"
+    restart: unless-stopped
+    volumes:
+      - redis_data:/data
+    networks:
+      - demo_net
+
+networks:
+  demo_net:
+    driver: bridge
+
+volumes:
+  redis_data:

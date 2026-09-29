@@ -1,0 +1,34 @@
+---
+- name: Harden sshd_config, refusing to reload on a broken config
+  block:
+    - name: Set sshd Port
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^#?Port "
+        line: "Port {{ hardening_ssh_port }}"
+      notify: Restart sshd
+
+    - name: Disable root login
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^#?PermitRootLogin "
+        line: "PermitRootLogin {{ 'no' if hardening_disable_root_login else 'yes' }}"
+      notify: Restart sshd
+
+    - name: Disable password authentication
+      ansible.builtin.lineinfile:
+        path: /etc/ssh/sshd_config
+        regexp: "^#?PasswordAuthentication "
+        line: "PasswordAuthentication {{ 'no' if hardening_disable_password_auth else 'yes' }}"
+      notify: Restart sshd
+
+    - name: Validate sshd config before it can lock us out
+      ansible.builtin.command: sshd -t
+      changed_when: false
+  rescue:
+    - name: Fail loudly instead of restarting sshd with a bad config
+      ansible.builtin.fail:
+        msg: >-
+          sshd -t reported an invalid config after the hardening changes above;
+          refusing to restart sshd to avoid locking out SSH access. Inspect
+          /etc/ssh/sshd_config on this host manually before re-running.

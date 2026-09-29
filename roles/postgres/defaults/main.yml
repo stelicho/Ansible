@@ -1,0 +1,5 @@
+---
+postgres_version: "16"
+postgres_db_name: demo_app
+postgres_db_user: demo_app
+postgres_listen_addresses: localhost

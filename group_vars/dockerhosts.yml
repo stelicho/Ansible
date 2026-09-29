@@ -1,0 +1,6 @@
+---
+containers_app_project_name: demo_stack
+containers_app_dest: "/opt/{{ containers_app_project_name }}"
+containers_app_web_image: "nginx:1.27-alpine"
+containers_app_web_port: 8081
+containers_app_redis_image: "redis:7-alpine"

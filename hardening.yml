@@ -1,0 +1,13 @@
+---
+# CIS-lite baseline hardening: SSH lockdown, UFW default-deny, fail2ban,
+# and unattended security updates. Runs against every Linux-family tier
+# via the `hardened` group-of-groups in inventory/hosts.yml.
+#
+#   ansible-playbook hardening.yml --ask-become-pass
+#   ansible-playbook hardening.yml --tags ssh,firewall   # run a subset
+
+- name: Apply baseline security hardening
+  hosts: hardened
+  become: true
+  roles:
+    - hardening

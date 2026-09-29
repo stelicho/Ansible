@@ -1,0 +1,4 @@
+---
+nginx_upstream_port: "{{ app_port | default(8080) }}"
+nginx_server_name: "app.example.com"
+nginx_health_check_path: "/healthz"

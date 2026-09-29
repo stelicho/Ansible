@@ -1,0 +1,35 @@
+---
+# Multi-tier web app deploy: postgres -> app -> nginx, with a rolling,
+# health-checked rollout of the web tier.
+#
+#   ansible-playbook webapp.yml --ask-vault-pass
+
+- name: Configure database tier
+  hosts: dbservers
+  become: true
+  roles:
+    - postgres
+
+- name: Configure application tier
+  hosts: appservers
+  become: true
+  roles:
+    - app
+
+- name: Configure web / reverse-proxy tier (rolling)
+  hosts: webservers
+  become: true
+  serial: "30%"
+  max_fail_percentage: 0
+  roles:
+    - nginx
+  post_tasks:
+    - name: Confirm health check responds behind nginx
+      ansible.builtin.uri:
+        url: "http://{{ ansible_host | default(inventory_hostname) }}{{ nginx_health_check_path }}"
+        status_code: 200
+      delegate_to: localhost
+      register: web_health
+      retries: 5
+      delay: 3
+      until: web_health.status == 200

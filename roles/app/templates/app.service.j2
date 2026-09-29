@@ -1,0 +1,15 @@
+[Unit]
+Description=Demo application
+After=network.target
+
+[Service]
+Type=simple
+User={{ app_user }}
+WorkingDirectory={{ app_dest }}
+EnvironmentFile={{ app_dest }}/.env
+ExecStart=/usr/bin/env node server.js
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
