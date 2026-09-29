@@ -1,0 +1,7 @@
+---
+dev_tools_extra:
+  - nodejs
+  - python3
+  - python3-pip
+  - docker.io
+  - awscli

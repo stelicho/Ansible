@@ -1,0 +1,29 @@
+*.retry
+*.log
+
+# Vault / secrets
+vault.yml
+*.vault.yml
+secrets.yml
+*.pem
+*.key
+
+# Inventory overrides that may contain host-specific secrets
+inventory/host_vars/*.local.yml
+inventory/group_vars/*.local.yml
+
+# Ansible artifacts
+.ansible/
+ansible.log
+*.retry
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/

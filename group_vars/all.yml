@@ -1,0 +1,15 @@
+---
+dotfiles_repo: "git@github.com:youruser/dotfiles.git"
+dotfiles_dest: "{{ ansible_env.HOME }}/.dotfiles"
+dotfiles_files:
+  - .zshrc
+  - .gitconfig
+  - .vimrc
+
+dev_tools_common:
+  - git
+  - vim
+  - htop
+  - tmux
+  - wget
+  - jq

@@ -1,0 +1,9 @@
+---
+- name: Provision workstation
+  hosts: all
+  gather_facts: true
+
+  roles:
+    - common
+    - dev_tools
+    - dotfiles

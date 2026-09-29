@@ -1,0 +1,10 @@
+---
+dev_tools_extra:
+  - node
+  - python3
+  - docker
+  - awscli
+
+homebrew_casks:
+  - visual-studio-code
+  - iterm2

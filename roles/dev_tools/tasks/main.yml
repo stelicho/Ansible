@@ -1,0 +1,19 @@
+---
+- name: Install extra dev tools (Linux)
+  ansible.builtin.apt:
+    name: "{{ dev_tools_extra }}"
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Install extra dev tools (macOS)
+  community.general.homebrew:
+    name: "{{ dev_tools_extra }}"
+    state: present
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Install GUI apps via Homebrew Cask (macOS)
+  community.general.homebrew_cask:
+    name: "{{ homebrew_casks }}"
+    state: present
+  when: ansible_facts['os_family'] == "Darwin" and homebrew_casks is defined

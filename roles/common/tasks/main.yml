@@ -1,0 +1,25 @@
+---
+- name: Update apt cache (Linux)
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+  become: true
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Update Homebrew (macOS)
+  community.general.homebrew:
+    update_homebrew: true
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Install common packages (Linux)
+  ansible.builtin.apt:
+    name: "{{ dev_tools_common }}"
+    state: present
+  become: true
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Install common packages (macOS)
+  community.general.homebrew:
+    name: "{{ dev_tools_common }}"
+    state: present
+  when: ansible_facts['os_family'] == "Darwin"
